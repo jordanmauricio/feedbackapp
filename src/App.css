@@ -66,3 +66,11 @@ ul {
   position:fixed;
   bottom:0;
 }
+
+#block-counter {
+  height:0;
+  top:0;
+  width:0%;
+  border-bottom:10px solid rgba(231, 76, 60,1.0);
+  transition: 0.5s ease all;
+}

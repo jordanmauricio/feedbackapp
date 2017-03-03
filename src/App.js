@@ -24,6 +24,10 @@ class App extends Component {
         const questions = Array.from(document.querySelector( "#temp-questions" ).childNodes);
         const question = questions.map((q) => q.innerHTML );
 
+        let headerCounter = (this.state.count/questions.length)*100;
+        console.log(headerCounter + "%", document.querySelector( "#block-counter" ).style);
+        document.querySelector( "#block-counter" ).style.width=headerCounter + "%";
+
         if( this.state.count < questions.length){
             newQuestions.insertAdjacentHTML("afterbegin", question[this.state.count]);
             this.setState({ count: this.state.count+1 });
@@ -35,6 +39,7 @@ class App extends Component {
     render() {
         return (
         <div className="questions">
+            <div id="block-counter"></div>
             <ol id="temp-questions">
             <li>
                 <h1>Are YOU happy with our product?</h1>
