@@ -17,23 +17,34 @@ class App extends Component {
         const newQuestions = document.querySelector( "#newQuestions" );
         document.querySelector( "#nextButton" ).innerHTML = "Continue";
 
+        //clear window
         if(newQuestions.hasChildNodes()){
             newQuestions.innerHTML = "";
         }
     
+        //get list of questions
         const questions = Array.from(document.querySelector( "#temp-questions" ).childNodes);
         const question = questions.map((q) => q.innerHTML );
 
+        //bar counter
         let headerCounter = (this.state.count/questions.length)*100;
         console.log(headerCounter + "%", document.querySelector( "#block-counter" ).style);
         document.querySelector( "#block-counter" ).style.width=headerCounter + "%";
 
+        //display question
         if( this.state.count < questions.length){
             newQuestions.insertAdjacentHTML("afterbegin", question[this.state.count]);
             this.setState({ count: this.state.count+1 });
         } else {
-            newQuestions.insertAdjacentHTML("afterbegin", "<li><h1 className='blue'>I ran out of numbers...<h1></li>");
+            document.querySelector( "#nextButton" ).innerHTML = "Bye!";
+            return newQuestions.insertAdjacentHTML("afterbegin", "<li><h1>I ran out of numbers...</h1><br/><div onClick={this.handleSubmit}>Submit</div></li>");
         }
+        this.forceUpdate();
+    }
+
+    handleSubmit(){
+        console.log("Handling, baws")
+
     }
 
     render() {
