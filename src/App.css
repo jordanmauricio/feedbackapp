@@ -22,3 +22,41 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#temp-questions {
+  display:none;
+}
+
+.questions {
+
+}
+
+#newQuestions ul {
+    width:100%;
+  height:100%;
+}
+
+h1 {
+  font-size:48px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.blue {
+  color:rgba(231, 76, 60,1.0);
+}
+
+#nextButton {
+  width:100%;
+  padding:50px;
+  text-align:center;
+  background-color:rgba(236, 240, 241,1.0);
+  font-size:21;
+  position:fixed;
+  bottom:0;
+}
