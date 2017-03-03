@@ -12,6 +12,12 @@ class App extends Component {
         };
     }
 
+
+    handleSubmit(){
+        console.log("Handling, baws")
+
+    }
+
     goToNext(){
     
         const newQuestions = document.querySelector( "#newQuestions" );
@@ -37,14 +43,10 @@ class App extends Component {
             this.setState({ count: this.state.count+1 });
         } else {
             document.querySelector( "#nextButton" ).innerHTML = "Bye!";
-            return newQuestions.insertAdjacentHTML("afterbegin", "<li><h1>I ran out of numbers...</h1><br/><div onClick={this.handleSubmit}>Submit</div></li>");
+            newQuestions.insertAdjacentHTML("afterbegin", "<li><h1>I ran out of numbers...</h1><br/><div id='submit-button'>Submit</div></li>");
+            document.querySelector( "#submit-button" ).addEventListener("click", this.handleSubmit, false );
         }
-        this.forceUpdate();
-    }
-
-    handleSubmit(){
-        console.log("Handling, baws")
-
+        
     }
 
     render() {
