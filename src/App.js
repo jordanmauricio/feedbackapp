@@ -36,9 +36,38 @@ class App extends Component {
     return (
       <div className="questions">
         <ol id="temp-questions">
-          <li><h1>1</h1></li>
-          <li><h1>2</h1></li>
-          <li><h1>3</h1></li>
+          <li>
+            <h1>Are YOU happy with our product?</h1>
+            <br />
+            <form>
+              <label for="product">Fantastic!</label>
+              <input type="radio" name="product" value="fantastic" />
+              <label for="product">Absolutely shit.</label>
+              <input type="radio" name="product" value="shit" />
+            </form>
+          </li>
+
+          <li>
+            <h1>How did YOU find our Scrum process?</h1>
+            <br/>
+            <form>
+              <label for="product">Excellent!</label>
+              <input type="radio" name="scrum" value="excellent"/>
+              <label for="product">Never again.</label>
+              <input type="radio" name="scrum" value="Never again" />
+            </form>
+          </li>
+
+          <li>
+            <h1>What's your opinion on the plausibility of the Einstein-Rosen bridge?</h1>
+            <br />
+            <form>
+              <label for="bridge">Everyone forgets about Ludwig!</label>
+              <input type="radio" name="bridge" value="ludwig" />
+              <label for="bridge">Does Schwarzschild even HAVE a first name?</label>
+              <input type="radio" name="bridge" value="schwarzschild" />
+            </form>
+          </li>
         </ol>
 
         <ul id="newQuestions"></ul>

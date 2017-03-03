@@ -32,12 +32,18 @@
 }
 
 #newQuestions ul {
-    width:100%;
+  width:60%;
   height:100%;
 }
 
 h1 {
   font-size:48px;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+li form {
   display:flex;
   justify-content: center;
   align-items: center;
