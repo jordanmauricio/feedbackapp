@@ -5,7 +5,6 @@ npm start
 ```
 
 ToDo:
-http://react.tips/radio-buttons-in-reactjs/
-Explains how to keep track of the buttons.
+On submit you now receive an array of objects with all the selected choices.
 
 Send to rebase on submit.

@@ -1,0 +1,29 @@
+{
+    "title": "Client Name",
+    "description": "This will be our introduction text",
+    "questions": [
+        {
+            "question": "Are YOU happy with our product?",
+            "answers": [
+                "Fanstastic!",
+                "Absolutely shit."
+            ]
+        },
+
+        {
+            "question": "How did YOU find our Scrum process?",
+            "answers": [
+                "Excellent!",
+                "Never again."
+            ]
+        },
+
+        {
+            "question": "What's your opinion on the plausibility of the Einstein-Rosen bridge?",
+            "answers": [
+                "Everyone forgets about Ludwig!",
+                "Does Schwarzschild even HAVE a first name?"
+            ]
+        }
+    ]
+}

@@ -1,94 +1,126 @@
 import React, { Component } from "react";
 import "./App.css";
+import Question from "./Question";
 
 class App extends Component {
 
     constructor(props){
         super(props);
+        this.handleSelections = this.handleSelections.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
         this.goToNext = this.goToNext.bind(this);
 
-        this.state = {
-            count: 0
+        this.data = {
+            "title": "Client Name",
+            "description": "This will be our introduction text",
+            "questions": [
+                {
+                    "name": "product",
+                    "question": "Are YOU happy with our product?",
+                    "answers": [
+                        {
+                            "answer": "Fanstastic!",
+                            "value": "fantastic",
+                        },
+                        {
+                            "answer": "Absolutely shit.",
+                            "value": "shit",
+                        }
+                        
+                        
+                    ]
+                },
+
+                {
+                    "name": "scrum",
+                    "question": "How did YOU find our Scrum process?",
+                    "answers": [
+                        {
+                            "answer": "Excellent!",
+                            "value": "excellent",
+                        },
+                        {
+                            "answer": "Never again.",
+                            "value": "never",
+                        },
+                        
+                    ]
+                },
+
+                {
+                    "name": "bridge",
+                    "question": "What's your opinion on the plausibility of the Einstein-Rosen bridge?",
+                    "answers": [
+                        {
+                            "answer": "Everyone forgets about Ludwig!",
+                            "value": "ludwig"
+                        },
+                        {
+                            "answer": "Does Schwarzschild even HAVE a first name?",
+                            "value": "schwarzschild"
+                        }
+                    ]
+                }
+            ]
         };
+
+        this.state = {
+            pageCount: -1,
+        };
+
+        this.selectedOptions = [
+            { "name": "product", "value":false },
+            { "name": "scrum", "value":false },
+            { "name": "bridge", "value":false }
+        ];
+
+        this.currentQuestion = "";
     }
 
+    handleSelections(value, name){
+        this.selectedOptions.map((obj) => {
+            if(obj.name === name){
+                return obj.value = value;
+            }
+        });
+    }
 
     handleSubmit(){
-        console.log("Handling, baws")
+        //send to Firebase
+        console.log(this.selectedOptions);
 
     }
 
     goToNext(){
     
-        const newQuestions = document.querySelector( "#newQuestions" );
-        document.querySelector( "#nextButton" ).innerHTML = "Continue";
+        const button = document.querySelector( "#nextButton" );
+        button.innerHTML = "Continue";
 
-        //clear window
-        if(newQuestions.hasChildNodes()){
-            newQuestions.innerHTML = "";
-        }
-    
-        //get list of questions
-        const questions = Array.from(document.querySelector( "#temp-questions" ).childNodes);
-        const question = questions.map((q) => q.innerHTML );
+        this.setState({ pageCount: this.state.pageCount+1 });
 
         //bar counter
-        let headerCounter = (this.state.count/questions.length)*100;
-        console.log(headerCounter + "%", document.querySelector( "#block-counter" ).style);
+        let headerCounter = ((this.state.pageCount+1)/3)*100;
         document.querySelector( "#block-counter" ).style.width=headerCounter + "%";
 
-        //display question
-        if( this.state.count < questions.length){
-            newQuestions.insertAdjacentHTML("afterbegin", question[this.state.count]);
-            this.setState({ count: this.state.count+1 });
-        } else {
-            document.querySelector( "#nextButton" ).innerHTML = "Bye!";
-            newQuestions.insertAdjacentHTML("afterbegin", "<li><h1>I ran out of numbers...</h1><br/><div id='submit-button'>Submit</div></li>");
-            document.querySelector( "#submit-button" ).addEventListener("click", this.handleSubmit, false );
-        }
-        
     }
 
     render() {
+        if( this.state.pageCount !== -1) {
+            this.currentQuestion = this.state.pageCount < 3 ? <Question
+                        name={this.data.questions[this.state.pageCount].name}
+                        question={this.data.questions[this.state.pageCount].question}
+                        answers={this.data.questions[this.state.pageCount].answers}
+                        key={this.data.questions[this.state.pageCount].name}
+                        options={this.handleSelections}
+                    /> : <h1><div onClick={this.handleSubmit}>Submit</div></h1>; 
+        }
+
         return (
-        <div className="questions">
+        <div className="questionsList">
             <div id="block-counter"></div>
-            <ol id="temp-questions">
-            <li>
-                <h1>Are YOU happy with our product?</h1>
-                <br />
-                <form>
-                <label for="product">Fantastic!</label>
-                <input type="radio" name="product" value="fantastic" />
-                <label for="product">Absolutely shit.</label>
-                <input type="radio" name="product" value="shit" />
-                </form>
-            </li>
 
-            <li>
-                <h1>How did YOU find our Scrum process?</h1>
-                <br/>
-                <form>
-                <label for="product">Excellent!</label>
-                <input type="radio" name="scrum" value="excellent"/>
-                <label for="product">Never again.</label>
-                <input type="radio" name="scrum" value="Never again" />
-                </form>
-            </li>
+            <ul id="currentQuestion">{this.currentQuestion}</ul>
 
-            <li>
-                <h1>What's your opinion on the plausibility of the Einstein-Rosen bridge?</h1>
-                <br />
-                <form>
-                <label for="bridge">Everyone forgets about Ludwig!</label>
-                <input type="radio" name="bridge" value="ludwig" />
-                <label for="bridge">Does Schwarzschild even HAVE a first name?</label>
-                <input type="radio" name="bridge" value="schwarzschild" />
-                </form>
-            </li>
-            </ol>
-
-            <ul id="newQuestions"></ul>
             <div id="nextButton" onClick={this.goToNext}>Start</div>
         </div>
         );
