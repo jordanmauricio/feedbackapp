@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "./App.css";
 import Question from "./Question";
+import base from "./base";
 
 class App extends Component {
 
@@ -11,6 +12,7 @@ class App extends Component {
         this.goToNext = this.goToNext.bind(this);
 
         this.data = {
+            "id": "projectId",
             "title": "Client Name",
             "description": "This will be our introduction text",
             "questions": [
@@ -89,7 +91,18 @@ class App extends Component {
     handleSubmit(){
         //send to Firebase
         console.log(this.selectedOptions);
-
+        this.selectedOptions.forEach((answer) => {
+            var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
+                data: answer,
+                then(err){
+                    if(!err){
+                        console.log("Firebase sent.");
+                    }
+                }
+            });
+            //available immediately, you don't have to wait for the callback to be called
+            immediatelyAvailableReference.key = answer.name;
+        });
     }
 
     goToNext(){
