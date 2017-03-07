@@ -82,6 +82,7 @@ class App extends Component {
             if(obj.name === name){
                 return obj.value = value;
             }
+            return null;
         });
     }
 
@@ -123,7 +124,7 @@ class App extends Component {
             <div id="block-counter"></div>
 
             <div id="introduction-text"><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
-            
+
             <ul id="currentQuestion">{this.currentQuestion}</ul>
 
             <div id="nextButton" onClick={this.goToNext}>Start</div>
