@@ -1,35 +1,5 @@
-.App {
-  text-align: center;
-}
+body {
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-#temp-questions {
-  display:none;
-}
-
-#newQuestions ul {
-  width:60%;
-  height:100%;
 }
 
 h1 {
@@ -43,31 +13,20 @@ h3 {
   text-align:center;
 }
 
-li form {
-  display:flex;
-  justify-content: center;
-  align-items: center;
-}
-
 ul {
   list-style-type: none;
 }
 
-.blue {
-  color:rgba(231, 76, 60,1.0);
-}
-
-#nextButton {
-  width:100%;
-  padding:50px;
-  text-align:center;
-  background-color:rgba(236, 240, 241,1.0);
-  font-size:21;
-  position:fixed;
-  bottom:0;
+ul li {
+  height:100vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #block-counter {
+  position:fixed;
   height:0;
   top:0;
   width:0%;
@@ -75,6 +34,23 @@ ul {
   transition: 0.5s ease all;
 }
 
-.currentQuestion {
-  transition: 0.5s ease all;
+#introduction-text {
+  height:100vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#currentQuestion {
+  
+}
+
+#submitButton {
+  width:100%;
+  padding: 50px 0;
+  text-align:center;
+  background-color:rgba(236, 240, 241,1.0);
+  font-size:21;
+  bottom:0;
 }

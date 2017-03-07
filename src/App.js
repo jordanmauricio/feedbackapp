@@ -9,7 +9,7 @@ class App extends Component {
         super(props);
         this.handleSelections = this.handleSelections.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.goToNext = this.goToNext.bind(this);
+        this.generateQuestions = this.generateQuestions.bind(this);
 
         this.data = {
             "id": "projectId",
@@ -67,7 +67,7 @@ class App extends Component {
         };
 
         this.state = {
-            pageCount: -1,
+            questionCount: 1,
         };
 
         this.selectedOptions = [
@@ -76,7 +76,6 @@ class App extends Component {
             { "name": "bridge", "value":false }
         ];
 
-        this.currentQuestion = "";
     }
 
     handleSelections(value, name){
@@ -86,64 +85,57 @@ class App extends Component {
             }
             return null;
         });
-        this.setState({ pageCount: this.state.pageCount+1 });
+
+        //bar counter
+        let headerCounter = (this.state.questionCount/3)*100;
+        document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
+
+        this.setState({ questionCount: this.state.questionCount+1 });
+        window.scrollBy(0, window.innerHeight);
     }
 
     handleSubmit(){
         //send to Firebase
         console.log(this.selectedOptions);
-        this.selectedOptions.forEach((answer) => {
-            var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
-                data: answer,
-                then(err){
-                    if(!err){
-                        console.log("Firebase sent.");
-                    }
-                }
-            });
-            //available immediately, you don't have to wait for the callback to be called
-            immediatelyAvailableReference.key = answer.name;
-        });
+        // this.selectedOptions.forEach((answer) => {
+        //     var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
+        //         data: answer,
+        //         then(err){
+        //             if(!err){
+        //                 console.log("Firebase sent.");
+        //             }
+        //         }
+        //     });
+        //     //available immediately, you don't have to wait for the callback to be called
+        //     immediatelyAvailableReference.key = answer.name;
+        // });
     }
 
-    goToNext(){
-        
-        //start form
-        const button = document.querySelector( "#nextButton" );
-        const intro = document.querySelector( "#introduction-text" );
-        button.innerHTML = "Continue";
-        intro.style.display = "none";
+    generateQuestions(){
 
-        if( this.state.pageCount === -1 ){
-            this.setState({ pageCount: this.state.pageCount+1 });
-        }
-
-        //bar counter
-        let headerCounter = ((this.state.pageCount+1)/3)*100;
-        document.querySelector( "#block-counter" ).style.width=headerCounter + "%";
+        return this.data.questions.map((question) => {
+            return <Question
+                        name={question.name}
+                        question={question.question}
+                        answers={question.answers}
+                        key={question.name}
+                        options={this.handleSelections}
+                    />;
+        });
 
     }
 
     render() {
-        if( this.state.pageCount !== -1) {
-            this.currentQuestion = this.state.pageCount < 3 ? <Question
-                        name={this.data.questions[this.state.pageCount].name}
-                        question={this.data.questions[this.state.pageCount].question}
-                        answers={this.data.questions[this.state.pageCount].answers}
-                        key={this.data.questions[this.state.pageCount].name}
-                        options={this.handleSelections}
-                    /> : <h1><div onClick={this.handleSubmit}>Submit</div></h1>; 
-        }
 
         return (
         <div className="questionsList">
             <div id="block-counter"></div>
 
-            <div id="introduction-text"><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
+            <div id="introduction-text"><img src="/TRIMM.svg"/><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
 
-            <ul id="currentQuestion">{this.currentQuestion}</ul>
+            <ul id="currentQuestion">{this.generateQuestions()}</ul>
 
-            <div id="nextButton" onClick={this.goToNext}>Start</div>
+            <div id="submitButton" onClick={this.handleSubmit}><h1>Submit</h1></div>
         </div>
         );
     }
