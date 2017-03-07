@@ -39,6 +39,10 @@ h1 {
   align-items: center;
 }
 
+h3 {
+  text-align:center;
+}
+
 li form {
   display:flex;
   justify-content: center;
@@ -68,5 +72,9 @@ ul {
   top:0;
   width:0%;
   border-bottom:10px solid rgba(231, 76, 60,1.0);
+  transition: 0.5s ease all;
+}
+
+.currentQuestion {
   transition: 0.5s ease all;
 }

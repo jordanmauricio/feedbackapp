@@ -92,9 +92,12 @@ class App extends Component {
     }
 
     goToNext(){
-    
+        
+        //start form
         const button = document.querySelector( "#nextButton" );
+        const intro = document.querySelector( "#introduction-text" );
         button.innerHTML = "Continue";
+        intro.style.display = "none";
 
         this.setState({ pageCount: this.state.pageCount+1 });
 
@@ -119,6 +122,8 @@ class App extends Component {
         <div className="questionsList">
             <div id="block-counter"></div>
 
+            <div id="introduction-text"><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
+            
             <ul id="currentQuestion">{this.currentQuestion}</ul>
 
             <div id="nextButton" onClick={this.goToNext}>Start</div>
