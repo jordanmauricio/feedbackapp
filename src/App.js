@@ -86,6 +86,7 @@ class App extends Component {
             }
             return null;
         });
+        this.setState({ pageCount: this.state.pageCount+1 });
     }
 
     handleSubmit(){
@@ -113,7 +114,9 @@ class App extends Component {
         button.innerHTML = "Continue";
         intro.style.display = "none";
 
-        this.setState({ pageCount: this.state.pageCount+1 });
+        if( this.state.pageCount === -1 ){
+            this.setState({ pageCount: this.state.pageCount+1 });
+        }
 
         //bar counter
         let headerCounter = ((this.state.pageCount+1)/3)*100;
