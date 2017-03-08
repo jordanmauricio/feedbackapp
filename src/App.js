@@ -12,10 +12,7 @@ class App extends Component {
         this.handleSelections = this.handleSelections.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.generateQuestions = this.generateQuestions.bind(this);
-        // this.pushAnswers = this.pushAnswers.bind(this);
-        // this.sendData = this.sendData.bind(this);
-        this.callback = this.callback.bind(this);
-        // this.sleep = this.sleep.bind(this);
+        this.resolveForThisCallback = this.resolveForThisCallback.bind(this);
 
         this.data = {
             "id": "anotherProject",
@@ -112,6 +109,7 @@ class App extends Component {
             submitClass: "",
         };
 
+        //generate empty values
         this.selectedOptions = [];
         for(let question of this.data.questions){
             this.selectedOptions.push({"name": question.name, "value": false});
@@ -130,38 +128,42 @@ class App extends Component {
         let headerCounter = (this.state.questionCount/3)*100;
         document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
 
+        // for( let value of this.selectedOptions){
+        //     console.log(value.value);
+        // }
         this.setState({ questionCount: this.state.questionCount+1 });
 
+        //smooth transition animations
         let nextSlide;
         if( this.state.questionCount !== this.data.questions.length ){
             nextSlide = this.data.questions[this.state.questionCount].name;
         } else {
             nextSlide = "submitButton";
         }
-        //console.log(this.data.questions[this.state.questionCount].name);
-        //window.scrollBy(0, window.innerHeight);
+
         TweenLite.to(window, 2, {scrollTo:`#${nextSlide}`});
     }
 
     handleSubmit(){
-        //send to Firebase
+        //data check
         console.log(this.selectedOptions);
 
         this.setState({ submitClass: "processing" });
 
+        //send to Firebase
         this.selectedOptions.map((answer) => {
             var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
                 data: answer,
-                then: this.callback
+                then: this.esolveForThisCallback
             });
             //available immediately, you don't have to wait for the callback to be called
             var generatedKey = immediatelyAvailableReference.key;
         });
     }
 
-    callback(err) {
+    resolveForThisCallback(err) {
+        //todo: Set error message here
         if(!err){
-            //console.log("callback fn");
             this.setState({ submitClass: "doneProcessing" });
             document.querySelector( "#submitButton h4" ).textContent = "Done";
         }
