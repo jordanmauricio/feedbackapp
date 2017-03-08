@@ -128,10 +128,11 @@ class App extends Component {
         let headerCounter = (this.state.questionCount/3)*100;
         document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
 
-        // for( let value of this.selectedOptions){
-        //     console.log(value.value);
-        // }
-        this.setState({ questionCount: this.state.questionCount+1 });
+        for( let value of this.selectedOptions){
+            if (value.value === false) {
+                this.setState({ questionCount: this.state.questionCount+1 });
+            }
+        }
 
         //smooth transition animations
         let nextSlide;
@@ -154,7 +155,7 @@ class App extends Component {
         this.selectedOptions.map((answer) => {
             var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
                 data: answer,
-                then: this.esolveForThisCallback
+                then: this.resolveForThisCallback
             });
             //available immediately, you don't have to wait for the callback to be called
             var generatedKey = immediatelyAvailableReference.key;
@@ -165,7 +166,7 @@ class App extends Component {
         //todo: Set error message here
         if(!err){
             this.setState({ submitClass: "doneProcessing" });
-            document.querySelector( "#submitButton h4" ).textContent = "Done";
+            return document.querySelector( "#submitButton h4" ).textContent = "Done";
         }
     }
 
