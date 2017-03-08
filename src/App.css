@@ -90,11 +90,12 @@ ul li div:first-child {
   cursor:pointer;
   font-family: "Gotham Light", Fallback, sans-seriff;
   font-size:48px;
-  color:#fff;
-  background-color:#0D709A;
+  color:#0D709A;
+  background-color:#fff;
   padding: 30px 80px;
   display:block;
   transition:0.2s all ease;
+  border:10px #0D709A solid;
 
   -moz-border-radius: 80px;
   -webkit-border-radius: 80px;
@@ -102,13 +103,34 @@ ul li div:first-child {
   -khtml-border-radius: 80px; /* for old Konqueror browsers */
 }
 
+.defaultButton:hover {
+  color:#fff;
+  background-color:#0D709A;
+}
+
 .processing {
+  color:#fff;
   font-size:0;
   padding: 30px 30px;
   background-color:#becd00;
   transition:0.2s all ease;
+  /*border:10px #becd00 solid;*/
+  border:0;
+}
+
+.processing:hover {
+  color:#fff;
+  background-color:#becd00;
 }
 
 .doneProcessing {
+  color:#fff;
+  background-color:#d71c4c;
+  border:0;
+  /*border:10px #d71c4c solid;*/
+}
+
+.doneProcessing:hover {
+  color:#fff;
   background-color:#d71c4c;
 }
