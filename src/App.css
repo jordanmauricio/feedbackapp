@@ -1,20 +1,43 @@
-body {
+@font-face {
+  font-family: "Gotham Book";
+  src: url("/gotham-book-webfont.woff") format("woff"),
+       url("/gotham-book-webfont.eot"),
+       url("/gotham-book-webfont.ttf") format("truetype"),
+       url("/gotham-book-webfont.svg#gothambook") format("svg"),
+       url("/gotham-book-webfont.woff2") format("woff2");
+}
 
+@font-face {
+  font-family: "Gotham Light";
+  src: url("/gotham-xlight-webfont.woff") format("woff"),
+       url("/gotham-xlight-webfont.eot"),
+       url("/gotham-xlight-webfont.ttf") format("truetype"),
+       url("/gotham-xlight-webfont.svg#gothambook") format("svg"),
+       url("/gotham-xlight-webfont.woff2") format("woff2");
+}
+
+
+body {
+  font-family: "Gotham Book", Fallback, sans-seriff;
 }
 
 h1 {
-  font-size:48px;
+  font-family: "Gotham Book", Fallback, sans-seriff;
+  font-size:60px;
   display:flex;
   justify-content: center;
   align-items: center;
+  max-width:960px;
+  text-align:center;
 }
-
 h3 {
   text-align:center;
 }
 
 ul {
   list-style-type: none;
+  margin:0;
+  padding:0;
 }
 
 ul li {
@@ -23,6 +46,7 @@ ul li {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color:#46413c;
 }
 
 #block-counter {
@@ -43,14 +67,42 @@ ul li {
 }
 
 #currentQuestion {
-  
+  color:#fff;
 }
 
 #submitButton {
   width:100%;
-  padding: 50px 0;
-  text-align:center;
-  background-color:rgba(236, 240, 241,1.0);
-  font-size:21;
-  bottom:0;
+  height:100vh;
+  background-color:#fff;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.defaultButton {
+  cursor:pointer;
+  font-family: "Gotham Light", Fallback, sans-seriff;
+  font-size:48px;
+  color:#fff;
+  background-color:#0D709A;
+  padding: 30px 80px;
+  display:block;
+  transition:0.2s all ease;
+
+  -moz-border-radius: 80px;
+  -webkit-border-radius: 80px;
+  border-radius: 80px; /* future proofing */
+  -khtml-border-radius: 80px; /* for old Konqueror browsers */
+}
+
+.processing {
+  font-size:0;
+  padding: 30px 30px;
+  background-color:#becd00;
+  transition:0.2s all ease;
+  /*transform: scale(0.3, 1);*/
+}
+
+.doneProcessing {
+  background-color:#d71c4c;
 }
