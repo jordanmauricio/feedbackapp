@@ -5,6 +5,8 @@ import base from "./base";
 import { TweenLite } from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
 
+// import Questionnaire from "./question-data";
+
 class App extends Component {
 
     constructor(props){
@@ -136,7 +138,6 @@ class App extends Component {
         let headerCounter = (count/3)*100;
         document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
 
-
         //smooth transition animations
         let nextSlide;
         if( count !== this.data.questions.length ){
@@ -191,6 +192,7 @@ class App extends Component {
 
         return (
         <div className="questionsList">
+            {/*<Questionnaire />*/}
             <div id="block-counter"></div>
 
             <div id="introduction-text"><img src="/TRIMM.svg" alt="TRIMM logo"/><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
