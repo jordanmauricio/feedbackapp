@@ -16,106 +16,27 @@ class App extends Component {
         this.generateQuestions = this.generateQuestions.bind(this);
         this.resolveForThisCallback = this.resolveForThisCallback.bind(this);
 
-        this.data = {
-            "id": "anotherProject",
-            "title": "Unicarriers",
-            "description": "As part of TRIMM's commitment to providing the best possible service to our clients, we kindly request you to fill out this short questionnaire regarding our performance in our last sprint.",
-            "questions": [
-                {
-                    "name": "proactive",
-                    "question": "To which extent would you consider TRIMM to be a proactive partner to work with?",
-                    "answers": [
-                        {
-                            "answer": "Terrible",
-                            "value": "1",
-                        },
-                        {
-                            "answer": "Bad",
-                            "value": "2",
-                        },
-                        {
-                            "answer": "Neutral",
-                            "value": "3",
-                        },
-                        {
-                            "answer": "Good",
-                            "value": "4",
-                        },
-                        {
-                            "answer": "Excellent",
-                            "value": "5",
-                        },
-                        
-                    ]
-                },
-
-                {
-                    "name": "sprint",
-                    "question": "How satisfied are you with the results of the past sprint?",
-                    "answers": [
-                        {
-                            "answer": "Terrible",
-                            "value": "1",
-                        },
-                        {
-                            "answer": "Bad",
-                            "value": "2",
-                        },
-                        {
-                            "answer": "Neutral",
-                            "value": "3",
-                        },
-                        {
-                            "answer": "Good",
-                            "value": "4",
-                        },
-                        {
-                            "answer": "Excellent",
-                            "value": "5",
-                        },
-                        
-                    ]
-                },
-
-                {
-                    "name": "budget",
-                    "question": "How satisfied are you with the provided budget updates?",
-                    "answers": [
-                        {
-                            "answer": "Terrible",
-                            "value": "1",
-                        },
-                        {
-                            "answer": "Bad",
-                            "value": "2",
-                        },
-                        {
-                            "answer": "Neutral",
-                            "value": "3",
-                        },
-                        {
-                            "answer": "Good",
-                            "value": "4",
-                        },
-                        {
-                            "answer": "Excellent",
-                            "value": "5",
-                        },
-                    ]
-                }
-            ]
-        };
-
+        this.data;
+        this.selectedOptions = [];
+            
         this.state = {
             questionCount: 1,
             submitClass: "",
         };
 
-        //generate empty values
-        this.selectedOptions = [];
-        for(let question of this.data.questions){
-            this.selectedOptions.push({"name": question.name, "value": false});
-        } 
+    }
+
+    componentWillMount(){
+        base.fetch("unicarriersQuestionnaire", {
+            context: this,
+            asArray: true,
+            then(data){
+                this.data = data;
+                this.generateQuestions(this.data);
+            }
+        });
+
+        //console.log(this.data);
     }
 
     handleSelections(value, name){
@@ -146,7 +67,7 @@ class App extends Component {
             nextSlide = "submitButton";
         }
 
-        TweenLite.to(window, 2, {scrollTo:`#${nextSlide}`});
+        TweenLite.to(window, 0.4, {scrollTo:`#${nextSlide}`});
     }
 
     handleSubmit(){
@@ -174,9 +95,14 @@ class App extends Component {
         }
     }
 
-    generateQuestions(){
+    generateQuestions(data){
 
-        return this.data.questions.map((question) => {
+        //generate empty values
+        for(let question of data.questions){
+            this.selectedOptions.push({"name": question.name, "value": false});
+        } 
+
+        return data.questions.map((question) => {
             return <Question
                         name={question.name}
                         question={question.question}
