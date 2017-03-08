@@ -47,6 +47,12 @@ ul li {
   justify-content: center;
   align-items: center;
   background-color:#46413c;
+  position:relative;
+}
+
+ul li div:first-child {
+  position:absolute;
+  top:0;
 }
 
 #block-counter {

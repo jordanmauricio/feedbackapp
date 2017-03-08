@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "./App.css";
 import Question from "./Question";
 import base from "./base";
+import { TweenLite } from "gsap";
+import ScrollToPlugin from "gsap/ScrollToPlugin";
 
 class App extends Component {
 
@@ -129,7 +131,16 @@ class App extends Component {
         document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
 
         this.setState({ questionCount: this.state.questionCount+1 });
-        window.scrollBy(0, window.innerHeight);
+
+        let nextSlide;
+        if( this.state.questionCount !== this.data.questions.length ){
+            nextSlide = this.data.questions[this.state.questionCount].name;
+        } else {
+            nextSlide = "submitButton";
+        }
+        //console.log(this.data.questions[this.state.questionCount].name);
+        //window.scrollBy(0, window.innerHeight);
+        TweenLite.to(window, 2, {scrollTo:`#${nextSlide}`});
     }
 
     handleSubmit(){

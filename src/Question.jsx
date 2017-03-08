@@ -26,6 +26,7 @@ class Question extends Component {
     render(){
         return (
             <li>
+                <div id={this.props.name}></div>
                 <h1>{this.props.question}</h1>
                 <br />
                 <RadioGroup 
