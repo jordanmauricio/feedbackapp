@@ -124,20 +124,23 @@ class App extends Component {
             return null;
         });
 
-        //bar counter
-        let headerCounter = (this.state.questionCount/3)*100;
-        document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
-
-        for( let value of this.selectedOptions){
-            if (value.value === false) {
-                this.setState({ questionCount: this.state.questionCount+1 });
+        let count = 0;
+        for( value of this.selectedOptions){
+            if (value.value !== false) {
+                count++;
             }
         }
+        this.setState({ questionCount: count });
+
+        //bar counter
+        let headerCounter = (count/3)*100;
+        document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
+
 
         //smooth transition animations
         let nextSlide;
-        if( this.state.questionCount !== this.data.questions.length ){
-            nextSlide = this.data.questions[this.state.questionCount].name;
+        if( count !== this.data.questions.length ){
+            nextSlide = this.data.questions[count].name;
         } else {
             nextSlide = "submitButton";
         }
