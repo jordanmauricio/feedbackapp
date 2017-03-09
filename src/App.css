@@ -120,7 +120,6 @@ h3 {
   color:#fff;
   background-color:#d71c4c;
   border:0;
-  /*border:10px #d71c4c solid;*/
 }
 
 .doneProcessing:hover {
@@ -273,6 +272,15 @@ input[type="radio"]:checked + label::after {
   .defaultButton{
     font-size:24px;
     border:5px #0D709A solid;
+  }
+
+  .processing {
+    font-size:0;
+    border:0px;
+  }
+
+  .doneProcessing {
+    border:0px;
   }
 }
 
