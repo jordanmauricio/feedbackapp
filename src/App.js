@@ -4,7 +4,6 @@ import Question from "./Question";
 import base from "./base";
 import { TweenLite } from "gsap";
 import ScrollToPlugin from "gsap/ScrollToPlugin";
-
 // import Questionnaire from "./question-data";
 
 class App extends Component {
@@ -15,15 +14,16 @@ class App extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
         this.generateQuestions = this.generateQuestions.bind(this);
         this.resolveForThisCallback = this.resolveForThisCallback.bind(this);
+        this.handleStart = this.handleStart.bind(this);
 
         this.data = {
-            "id": "anotherProject",
-            "title": "Unicarriers",
-            "description": "As part of TRIMM's commitment to providing the best possible service to our clients, we kindly request you to fill out this short questionnaire regarding our performance in our last sprint.",
+            "id": "teamtevredenheid-march9",
+            "title": "Team Satisfaction Assessment",
+            "description": "As part of our team's continued strife in improving our group dynamic, we would kindly request you to fill out this quick form to share your sentiment regarding the past week.",
             "questions": [
                 {
-                    "name": "proactive",
-                    "question": "To which extent would you consider TRIMM to be a proactive partner to work with?",
+                    "name": "general",
+                    "question": "How did the past week go?",
                     "answers": [
                         {
                             "answer": "Terrible",
@@ -50,59 +50,20 @@ class App extends Component {
                 },
 
                 {
-                    "name": "sprint",
-                    "question": "How satisfied are you with the results of the past sprint?",
+                    "name": "last-week",
+                    "question": "Would you say the team dynamic has gotten better or worse?",
                     "answers": [
                         {
-                            "answer": "Terrible",
-                            "value": "1",
+                            "answer": "Better",
+                            "value": "better",
                         },
                         {
-                            "answer": "Bad",
-                            "value": "2",
-                        },
-                        {
-                            "answer": "Neutral",
-                            "value": "3",
-                        },
-                        {
-                            "answer": "Good",
-                            "value": "4",
-                        },
-                        {
-                            "answer": "Excellent",
-                            "value": "5",
+                            "answer": "Worse",
+                            "value": "worse",
                         },
                         
                     ]
                 },
-
-                {
-                    "name": "budget",
-                    "question": "How satisfied are you with the provided budget updates?",
-                    "answers": [
-                        {
-                            "answer": "Terrible",
-                            "value": "1",
-                        },
-                        {
-                            "answer": "Bad",
-                            "value": "2",
-                        },
-                        {
-                            "answer": "Neutral",
-                            "value": "3",
-                        },
-                        {
-                            "answer": "Good",
-                            "value": "4",
-                        },
-                        {
-                            "answer": "Excellent",
-                            "value": "5",
-                        },
-                    ]
-                }
             ]
         };
 
@@ -135,7 +96,8 @@ class App extends Component {
         this.setState({ questionCount: count });
 
         //bar counter
-        let headerCounter = (count/3)*100;
+        let amountOfQuestions = this.data.questions.length;
+        let headerCounter = (count/amountOfQuestions)*100;
         document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
 
         //smooth transition animations
@@ -146,7 +108,9 @@ class App extends Component {
             nextSlide = "submitButton";
         }
 
-        TweenLite.to(window, 2, {scrollTo:`#${nextSlide}`});
+        setTimeout(function(){ 
+            TweenLite.to(window, 1, {scrollTo:`#${nextSlide}`});
+        }, 300);
     }
 
     handleSubmit(){
@@ -188,6 +152,10 @@ class App extends Component {
 
     }
 
+    handleStart(){
+        TweenLite.to(window, 1, {scrollTo:`#${this.data.questions[0].name}`});
+    }
+
     render() {
 
         return (
@@ -195,7 +163,14 @@ class App extends Component {
             {/*<Questionnaire />*/}
             <div id="block-counter"></div>
 
-            <div id="introduction-text"><img src="/TRIMM.svg" alt="TRIMM logo"/><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
+            <div id="introduction-text">
+                <div className="svgWrapper">
+                    <img src="/TRIMM.svg" alt="TRIMM logo" style={{width:100 + "%"}}/>
+                </div>
+                <h1>{this.data.title}</h1><br/>
+                <h3>{this.data.description}</h3><br />
+                <div id="startButton" onClick={this.handleStart}><h4 className="defaultButton">Start</h4></div>
+            </div>
 
             <ul id="currentQuestion">{this.generateQuestions()}</ul>
 

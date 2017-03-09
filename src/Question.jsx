@@ -12,9 +12,13 @@ class Question extends Component {
         const buttons = this.props.answers;
         return buttons.map((answer) => {
             return (
-                <label key={answer.value}>
-                    <Radio value={answer.value}/>{answer.answer}
-                </label>
+                <div className="radioWrapper" key={answer.value}>
+                    <Radio value={answer.value} id={answer.answer} />
+                    <label key={answer.value} htmlFor={answer.answer} >
+                        {answer.answer}
+                    </label>
+                    {/*<div class="check"><div class="inside"></div></div>*/}
+                </div>
             );
         });
     }
@@ -26,15 +30,18 @@ class Question extends Component {
     render(){
         return (
             <li>
-                <div id={this.props.name}></div>
-                <h1>{this.props.question}</h1>
-                <br />
-                <RadioGroup 
-                    name={this.props.name}
-                    onChange={this.handleChange}
-                >
-                    {this.createRadioButtons()}
-                </RadioGroup>
+
+                    <div id={this.props.name} className="anchorJump"></div>
+                    <h1>{this.props.question}</h1>
+                    <br />
+                    <RadioGroup 
+                        name={this.props.name}
+                        onChange={this.handleChange}
+                        className="radioGroup"
+                    >
+                        {this.createRadioButtons()}
+                    </RadioGroup>
+                
             </li>
         );
     }

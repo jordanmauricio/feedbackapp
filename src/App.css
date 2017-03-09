@@ -30,29 +30,12 @@ h1 {
   max-width:960px;
   text-align:center;
 }
+
 h3 {
   text-align:center;
-}
-
-ul {
-  list-style-type: none;
-  margin:0;
-  padding:0;
-}
-
-ul li {
-  height:100vh;
-  display:flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color:#46413c;
-  position:relative;
-}
-
-ul li div:first-child {
-  position:absolute;
-  top:0;
+  font-size:18px;
+  max-width:800px;
+  font-weight:500;
 }
 
 #block-counter {
@@ -71,6 +54,16 @@ ul li div:first-child {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.introduction-text img {
+    width:300px;
+    height:auto;
+  }
+
+.anchorJump {
+  position:absolute;
+  top:0;
 }
 
 #currentQuestion {
@@ -134,3 +127,153 @@ ul li div:first-child {
   color:#fff;
   background-color:#d71c4c;
 }
+
+/** Radio Buttons **/
+
+ul {
+  list-style-type: none;
+  margin:0;
+  padding:0;
+  z-index:5;
+}
+
+ul li {
+  height:100vh;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:#46413c;
+  position:relative;
+  color:#AAAAAA;
+}
+
+ul li h1 {
+  color:#fff;
+}
+
+/*
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.radioWrapper {
+  position: relative;
+  margin: 0 10px;
+  padding-bottom: 30px;
+}*/
+
+.radioGroup {
+  display: flex;
+}
+
+.radioWrapper {
+  position: relative;
+  margin: 0 10px;
+  text-align:center;
+}
+
+input[type="radio"],
+.radioWrapper label {
+  display: block;
+  width: 50px;
+	height: 50px;
+ }
+
+input[type="radio"]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.radioWrapper label {
+	position: relative;
+	cursor: pointer;
+  padding: 0;
+  font-size:18px;
+}
+
+.radioWrapper label::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  content:"";
+  border-radius: 50%;
+  margin:0 auto;
+  background-color: #aaaaaa;
+}
+
+.radioWrapper label::after {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  height: 70%;
+  transform: translate( -50%, -50% );
+  transition: opacity .2s ease-in-out;
+  border-radius: 50%;
+  background-color:#0D709A;
+  content:"";
+  opacity: 0;
+}
+
+label:hover {
+  color:#fff;
+}
+
+label:hover::before {
+  background-color:#fff;
+}
+
+input[type="radio"]:checked + label {
+  color:#fff;
+}
+
+input[type="radio"]:checked + label::before {
+  background-color:#fff;
+
+}
+
+input[type="radio"]:checked + label::after {
+  transform: translate( -50%, -50% );
+  opacity: 1;
+}
+
+@media (max-width:800px){
+  .introduction-text img {
+    max-width:100%;
+    height:auto;
+  }
+
+  h1 {
+    max-width:90%;
+    font-size: 32px;
+  }
+
+  .radioGroup {
+  display: flex;
+  flex-flow:column wrap;
+  }
+
+  .radioWrapper {
+    position: relative;
+    margin: 0 10px;
+    text-align:center;
+    }
+
+  .radioWrapper label {
+    display:inline-block;
+  }
+
+  .defaultButton{
+    font-size:24px;
+    border:5px #0D709A solid;
+  }
+}
+
+
