@@ -73,29 +73,30 @@ class App extends Component {
         };
 
         //generate empty values
-        this.selectedOptions = [];
+        this.selectedOptions = {};
         for(let question of this.data.questions){
-            this.selectedOptions.push({"name": question.name, "value": false});
+            this.selectedOptions[question.name] = false;
         } 
     }
 
     handleSelections(value, name){
-        this.selectedOptions.map((obj) => {
-            if(obj.name === name){
-                return obj.value = value;
-            }
-            return null;
-        });
 
+        //set selections
+        for(var key in this.selectedOptions){
+            if(this.selectedOptions.hasOwnProperty(name)){
+                this.selectedOptions[name] = value;
+            }
+        }
+
+        //bar counter
         let count = 0;
-        for( value of this.selectedOptions){
-            if (value.value !== false) {
+        for( key in this.selectedOptions){
+            if (this.selectedOptions[key] !== false) {
                 count++;
             }
         }
         this.setState({ questionCount: count });
 
-        //bar counter
         let amountOfQuestions = this.data.questions.length;
         let headerCounter = (count/amountOfQuestions)*100;
         document.querySelector( "#block-counter" ).style.width= headerCounter + "%";
@@ -115,19 +116,19 @@ class App extends Component {
 
     handleSubmit(){
         //data check
+        const timestamp = Date.now();
+        this.selectedOptions["timestamp"] = timestamp;
         console.log(this.selectedOptions);
 
         this.setState({ submitClass: "processing" });
 
         //send to Firebase
-        this.selectedOptions.map((answer) => {
-            var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
-                data: answer,
-                then: this.resolveForThisCallback
-            });
-            //available immediately, you don't have to wait for the callback to be called
-            var generatedKey = immediatelyAvailableReference.key;
+        var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
+            data: this.selectedOptions,
+            then: this.resolveForThisCallback
         });
+        //available immediately, you don't have to wait for the callback to be called
+        var generatedKey = immediatelyAvailableReference.key;
     }
 
     resolveForThisCallback(err) {
