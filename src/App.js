@@ -123,7 +123,7 @@ class App extends Component {
         this.setState({ submitClass: "processing" });
 
         //send to Firebase
-        var immediatelyAvailableReference = base.push(`${this.data.id}/answers`, {
+        var immediatelyAvailableReference = base.push(`${this.data.id}/properAnswers`, {
             data: this.selectedOptions,
             then: this.resolveForThisCallback
         });
