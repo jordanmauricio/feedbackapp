@@ -28,17 +28,16 @@ class App extends Component {
     }
 
     componentWillMount(){
-        base.fetch("unicarriersQuestionnaire", {
+        base.fetch("DeJongEnLaan", {
             context: this,
             asArray: true,
             then(data){
-                this.data = data;
+                //
+                let firstIndex = Object.keys(data[0])[0];
+                this.data = data[0][firstIndex];
                 this.setState({ receivedData: true });
-                //this.generateQuestions(this.data);
             }
         });
-
-        //console.log(this.data);
     }
 
     handleSelections(value, name){
@@ -97,7 +96,7 @@ class App extends Component {
         }
     }
 
-    generateQuestions(data){
+    generateQuestions(){
 
         //generate empty values
         for(let question of this.data.questions){
@@ -118,15 +117,23 @@ class App extends Component {
 
     render() {
 
-        let areQuestionsReceived;
-        this.state.receivedData === true ? areQuestionsReceived = "Loading" : areQuestionsReceived = `${this.generateQuestions}`;
+        let areQuestionsReceived, title, desc;
+        if( this.state.receivedData === true ){
+            areQuestionsReceived = this.generateQuestions();
+            title = `${this.data.title}`;
+            desc = `${this.data.description}`;
+        } else {
+            areQuestionsReceived = "Loading";
+            title = "Loading";
+            desc = "Loading";
+        }
 
         return (
         <div className="questionsList">
             {/*<Questionnaire />*/}
             <div id="block-counter"></div>
 
-            <div id="introduction-text"><img src="/TRIMM.svg" alt="TRIMM logo"/><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
+            <div id="introduction-text"><img src="/TRIMM.svg" alt="TRIMM logo"/><h1>{title}</h1><br/><h3>{desc}</h3></div>
 
             <ul id="currentQuestion">{areQuestionsReceived}</ul>
 
