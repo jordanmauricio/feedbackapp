@@ -22,6 +22,7 @@ class App extends Component {
         this.state = {
             questionCount: 1,
             submitClass: "",
+            receivedData: false,
         };
 
     }
@@ -32,7 +33,8 @@ class App extends Component {
             asArray: true,
             then(data){
                 this.data = data;
-                this.generateQuestions(this.data);
+                this.setState({ receivedData: true });
+                //this.generateQuestions(this.data);
             }
         });
 
@@ -98,11 +100,11 @@ class App extends Component {
     generateQuestions(data){
 
         //generate empty values
-        for(let question of data.questions){
+        for(let question of this.data.questions){
             this.selectedOptions.push({"name": question.name, "value": false});
         } 
 
-        return data.questions.map((question) => {
+        return this.data.questions.map((question) => {
             return <Question
                         name={question.name}
                         question={question.question}
@@ -116,6 +118,9 @@ class App extends Component {
 
     render() {
 
+        let areQuestionsReceived;
+        this.state.receivedData === true ? areQuestionsReceived = "Loading" : areQuestionsReceived = `${this.generateQuestions}`;
+
         return (
         <div className="questionsList">
             {/*<Questionnaire />*/}
@@ -123,7 +128,7 @@ class App extends Component {
 
             <div id="introduction-text"><img src="/TRIMM.svg" alt="TRIMM logo"/><h1>{this.data.title}</h1><br/><h3>{this.data.description}</h3></div>
 
-            <ul id="currentQuestion">{this.generateQuestions()}</ul>
+            <ul id="currentQuestion">{areQuestionsReceived}</ul>
 
             <div id="submitButton" onClick={this.handleSubmit}><h4 className={`defaultButton ${this.state.submitClass}`}>Submit</h4></div>
         </div>
