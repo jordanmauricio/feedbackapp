@@ -17,7 +17,7 @@ class App extends Component {
         this.handleStart = this.handleStart.bind(this);
 
         this.data;
-        this.selectedOptions = [];
+        this.selectedOptions = {};
 
         this.state = {
             questionCount: 1,
@@ -28,38 +28,47 @@ class App extends Component {
     }
 
     componentWillMount(){
-        base.fetch("DeJongEnLaan", {
+        base.fetch("DeJongEnLaan/questions", {
             context: this,
             asArray: true,
             then(data){
-                //
-                let firstIndex = Object.keys(data[0])[0];
-                this.data = data[0][firstIndex];
+                this.data = data[0];
+
+                 //generate empty values
+                for(let question of this.data.questions){
+                    this.selectedOptions[question.name] = false;
+                }
+                console.log(this.selectedOptions);
                 this.setState({ receivedData: true });
             }
         });
-
-        //generate empty values
-        this.selectedOptions = {};
-        for(let question of this.data.questions){
-            this.selectedOptions[question.name] = false;
-        }
     }
 
     handleSelections(value, name){
 
+        console.log("Before set: ", this.selectedOptions);
+        console.log(name);
         //set selections
-        for(var key in this.selectedOptions){
-            if(this.selectedOptions.hasOwnProperty(name)){
+        for(key in this.selectedOptions){
+            //console.log(name, key);   
+            //console.log(`Initial obj: ${this.selectedOptions[name]}`)
+            //if(this.selectedOptions.hasOwnProperty(name)){
+            if(key === name){
+               // console.log("Should log once");
+               // console.log(`${this.selectedOptions[name]} is being assigned ${value}`)
                 this.selectedOptions[name] = value;
             }
         }
 
+        console.log("After set: ", this.selectedOptions)
+
         //bar counter
         let count = 0;
-        for( key in this.selectedOptions){
+        for( var key in this.selectedOptions){
+            //console.log("The keys: ", this.selectedOptions[key]);
             if (this.selectedOptions[key] !== false) {
                 count++;
+                //console.log("Inside the if: ", count);
             }
         }
         this.setState({ questionCount: count });
@@ -107,13 +116,10 @@ class App extends Component {
     }
 
     generateQuestions(){
-
-        //generate empty values
-        for(let question of this.data.questions){
-            this.selectedOptions.push({"name": question.name, "value": false});
-        }
-
+        let counter = 0;
         return this.data.questions.map((question) => {
+            counter++;
+            console.log("NAME BEING INSERTED: #", counter, " ", question.name)
             return <Question
                         name={question.name}
                         question={question.question}

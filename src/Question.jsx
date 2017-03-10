@@ -17,31 +17,31 @@ class Question extends Component {
                     <label key={answer.value} htmlFor={answer.answer} >
                         {answer.answer}
                     </label>
-                    {/*<div class="check"><div class="inside"></div></div>*/}
                 </div>
             );
         });
     }
 
     handleChange(value){
+        console.log("THE NAME BEING SENT: ", this.props);
         this.props.options(value, this.props.name);
     }
 
     render(){
+        // debugger;
+        console.log("THE NAME BEING BEING USED IN GENERATION: ", this.props);
         return (
             <li>
-
-                    <div id={this.props.name} className="anchorJump"></div>
-                    <h1>{this.props.question}</h1>
-                    <br />
-                    <RadioGroup 
-                        name={this.props.name}
-                        onChange={this.handleChange}
-                        className="radioGroup"
-                    >
-                        {this.createRadioButtons()}
-                    </RadioGroup>
-                
+                <div id={this.props.name} className="anchorJump"></div>
+                <h1>{this.props.question}</h1>
+                <br />
+                <RadioGroup 
+                    name={this.props.name}
+                    onChange={this.handleChange}
+                    className="radioGroup"
+                >
+                    {this.createRadioButtons()}
+                </RadioGroup>
             </li>
         );
     }
