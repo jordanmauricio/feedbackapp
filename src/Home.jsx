@@ -5,7 +5,8 @@ export default class Questionnaire extends React.Component {
 
     render(){
 
-        this.data = {"id": "DeJongEnLaan",
+        this.data = {
+            "id": "DeJongEnLaan",
             "title": "JONGE' LAAN",
             "description": "As part of TRIMM's commitment to providing the best possible service to our clients, we kindly request you to fill out this short questionnaire regarding our performance in our last sprint.",
             "questions": [
@@ -94,15 +95,13 @@ export default class Questionnaire extends React.Component {
             ]
         };
 
-        let feedbackMessage = "Waiting to deploy";
         var immediatelyAvailableReference = base.push(this.data.id + "/questions", {
             data: this.data,
             then(err){
-                console.log("Hi");
                 if(!err){
-                    feedbackMessage = "Successfully pushed new questionnaire.";
+                    console.log("Success.");
                 } else {
-                    feedbackMessage = "There was an error pushing your questionnaire.";
+                    console.log("There was an error pushing your questionnaire.");
                 }
             }
         });
@@ -111,7 +110,7 @@ export default class Questionnaire extends React.Component {
     
         
         return(
-            <div><h1>{feedbackMessage}</h1></div>
+            <div><h1>Deploying, check console.</h1></div>
         );
     }
     }

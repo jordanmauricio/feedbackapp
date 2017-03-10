@@ -5,7 +5,7 @@ class Question extends Component {
 
     constructor(props){
         super(props);
-        this.handleChange = this.handleChange.bind(this);
+        //this.handleChange = this.handleChange.bind(this);
     }
 
     createRadioButtons(){
@@ -23,13 +23,15 @@ class Question extends Component {
     }
 
     handleChange(value){
-        console.log("THE NAME BEING SENT: ", this.props);
+        //console.log("THE NAME BEING SENT: ", this.props);
+        // console.log("On click: ", this.props.name);
+        // debugger;
+        console.log(this.props.name);
         this.props.options(value, this.props.name);
     }
 
     render(){
-        // debugger;
-        console.log("THE NAME BEING BEING USED IN GENERATION: ", this.props);
+       // console.log("THE NAME BEING BEING USED IN GENERATION: ", this.props);
         return (
             <li>
                 <div id={this.props.name} className="anchorJump"></div>

@@ -18,6 +18,9 @@ class App extends Component {
 
         this.data;
         this.selectedOptions = {};
+        this.areQuestionsReceived = "Loading";
+        this.title = "Loading";
+        this.desc = "Loading";
 
         this.state = {
             questionCount: 1,
@@ -33,12 +36,12 @@ class App extends Component {
             asArray: true,
             then(data){
                 this.data = data[0];
-
+                console.log(this.data);
                  //generate empty values
                 for(let question of this.data.questions){
                     this.selectedOptions[question.name] = false;
                 }
-                console.log(this.selectedOptions);
+                this.contentChecker();
                 this.setState({ receivedData: true });
             }
         });
@@ -46,11 +49,11 @@ class App extends Component {
 
     handleSelections(value, name){
 
-        console.log("Before set: ", this.selectedOptions);
-        console.log(name);
+       // console.log("Before set: ", this.selectedOptions);
+        //console.log(name);
         //set selections
-        for(key in this.selectedOptions){
-            //console.log(name, key);   
+        for(let key in this.selectedOptions){
+            console.log(name, key);   
             //console.log(`Initial obj: ${this.selectedOptions[name]}`)
             //if(this.selectedOptions.hasOwnProperty(name)){
             if(key === name){
@@ -60,18 +63,18 @@ class App extends Component {
             }
         }
 
-        console.log("After set: ", this.selectedOptions)
+        //console.log("After set: ", this.selectedOptions);
 
         //bar counter
         let count = 0;
-        for( var key in this.selectedOptions){
+        for( let key in this.selectedOptions){
             //console.log("The keys: ", this.selectedOptions[key]);
             if (this.selectedOptions[key] !== false) {
                 count++;
                 //console.log("Inside the if: ", count);
             }
         }
-        this.setState({ questionCount: count });
+        //this.setState({ questionCount: count });
 
         let amountOfQuestions = this.data.questions.length;
         let headerCounter = (count/amountOfQuestions)*100;
@@ -94,7 +97,7 @@ class App extends Component {
         //data check
         const timestamp = Date.now();
         this.selectedOptions["timestamp"] = timestamp;
-        console.log(this.selectedOptions);
+        //console.log(this.selectedOptions);
 
         this.setState({ submitClass: "processing" });
 
@@ -116,10 +119,10 @@ class App extends Component {
     }
 
     generateQuestions(){
-        let counter = 0;
+       // let counter = 0;
         return this.data.questions.map((question) => {
-            counter++;
-            console.log("NAME BEING INSERTED: #", counter, " ", question.name)
+            //counter++;
+            //console.log("NAME BEING INSERTED: #", counter, " ", question.name);
             return <Question
                         name={question.name}
                         question={question.question}
@@ -132,21 +135,21 @@ class App extends Component {
     }
 
     handleStart(){
-        TweenLite.to(window, 1, {scrollTo:`#${this.data.questions[0].name}`});
+        if(this.state.receivedData === true){
+            TweenLite.to(window, 1, {scrollTo:`#${this.data.questions[0].name}`});
+        }
+    }
+
+    contentChecker(){
+        
+        //if( this.state.receivedData === true ){
+        this.areQuestionsReceived = this.generateQuestions();
+        this.title = `${this.data.title}`;
+        this.desc = `${this.data.description}`;
+        //} 
     }
 
     render() {
-
-        let areQuestionsReceived, title, desc;
-        if( this.state.receivedData === true ){
-            areQuestionsReceived = this.generateQuestions();
-            title = `${this.data.title}`;
-            desc = `${this.data.description}`;
-        } else {
-            areQuestionsReceived = "Loading";
-            title = "Loading";
-            desc = "Loading";
-        }
 
         return (
         <div className="questionsList">
@@ -157,12 +160,12 @@ class App extends Component {
                 <div className="svgWrapper">
                     <img src="/TRIMM.svg" alt="TRIMM logo" style={{width:100 + "%"}}/>
                 </div>
-                <h1>{title}</h1><br/>
-                <h3>{desc}</h3><br />
+                <h1>{this.title}</h1><br/>
+                <h3>{this.desc}</h3><br />
                 <div id="startButton" onClick={this.handleStart}><h4 className="defaultButton">Start</h4></div>
             </div>
 
-            <ul id="currentQuestion">{areQuestionsReceived}</ul>
+            <ul id="currentQuestion">{this.areQuestionsReceived}</ul>
 
             <div id="submitButton" onClick={this.handleSubmit}><h4 className={`defaultButton ${this.state.submitClass}`}>Submit</h4></div>
         </div>
