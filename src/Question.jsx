@@ -13,8 +13,8 @@ class Question extends Component {
         return buttons.map((answer) => {
             return (
                 <div className="radioWrapper" key={answer.value}>
-                    <Radio value={answer.value} id={answer.answer} />
-                    <label key={answer.value} htmlFor={answer.answer} >
+                    <Radio value={answer.value} id={this.props.name + '_' + answer.answer} />
+                    <label key={answer.value} htmlFor={this.props.name + '_' + answer.answer} >
                         {answer.answer}
                     </label>
                 </div>
@@ -25,13 +25,12 @@ class Question extends Component {
     handleChange(value){
         //console.log("THE NAME BEING SENT: ", this.props);
         // console.log("On click: ", this.props.name);
-        // debugger;
-        console.log(this.props.name);
+        console.log(this.props.name, this);
         this.props.options(value, this.props.name);
     }
 
     render(){
-       // console.log("THE NAME BEING BEING USED IN GENERATION: ", this.props);
+        console.log("THE NAME BEING BEING USED IN GENERATION: ", this.props.name, this);
         return (
             <li>
                 <div id={this.props.name} className="anchorJump"></div>

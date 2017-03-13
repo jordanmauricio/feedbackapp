@@ -49,7 +49,7 @@ class App extends Component {
 
     handleSelections(value, name){
 
-       // console.log("Before set: ", this.selectedOptions);
+       console.log("Before set: ", this.selectedOptions);
         //console.log(name);
         //set selections
         for(let key in this.selectedOptions){
@@ -63,7 +63,7 @@ class App extends Component {
             }
         }
 
-        //console.log("After set: ", this.selectedOptions);
+        console.log("After set: ", this.selectedOptions);
 
         //bar counter
         let count = 0;
